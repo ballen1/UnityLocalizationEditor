@@ -53,7 +53,6 @@ public class TranslationUnitEditor : EditorWindow {
 
 			if (tu.languageFiles.Count != 0) {
 				displayLanguageUnitEditor ();
-		
 			}
 		}
 
@@ -132,8 +131,10 @@ public class TranslationUnitEditor : EditorWindow {
 
 	}
 
+	// Returns index of key/value pair to be deleted
 	private void displayLanguageUnitEditor() {
 
+		int deletionMark = -1;
 		LanguageUnit lu = tu.getLanguageUnit (languagePopupIndex);
 
 		if (lu) {
@@ -148,6 +149,11 @@ public class TranslationUnitEditor : EditorWindow {
 				lu.keys [i] = EditorGUILayout.TextField (lu.keys [i]);
 				EditorGUILayout.LabelField ("String", GUILayout.MaxWidth(50));
 				lu.values [i] = EditorGUILayout.TextField (lu.values [i]);
+
+				if (GUILayout.Button ("X", GUILayout.MaxWidth(20))) {
+					deletionMark = i;
+				}
+
 				EditorGUILayout.EndHorizontal ();
 			}
 
@@ -157,6 +163,13 @@ public class TranslationUnitEditor : EditorWindow {
 				lu.values.Add ("");
 			}
 			EditorGUILayout.EndHorizontal ();
+
+			if (deletionMark != -1) {
+				GUI.FocusControl (null);
+				lu.keys.RemoveAt (deletionMark);
+				lu.values.RemoveAt (deletionMark);
+				EditorUtility.SetDirty (this);
+			}
 		}
 			
 	}
