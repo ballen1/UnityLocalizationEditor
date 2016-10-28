@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class TranslationUnitEditor : EditorWindow {
 
 	public TranslationUnit tu;
+	private int languagePopupIndex = 0;
 
 	[MenuItem("Localization/Localization Editor")]
 	static void Init() {
@@ -26,6 +27,20 @@ public class TranslationUnitEditor : EditorWindow {
 		}
 
 		GUILayout.EndHorizontal ();
+
+		if (tu != null) {
+
+			GUILayout.BeginHorizontal ();
+			EditorGUILayout.LabelField ("Current Language", EditorStyles.boldLabel);
+			CreateLanguagePopup ();
+
+
+			if (GUILayout.Button ("New Language")) {
+				NewLanguageDialog ();
+			}
+
+			GUILayout.EndHorizontal ();
+		}
 
 	}
 
@@ -67,6 +82,27 @@ public class TranslationUnitEditor : EditorWindow {
 
 			}
 		}
+	}
+
+	private void CreateLanguagePopup() {
+
+		if (tu != null) {
+
+			string[] popupOptions;
+
+			if (tu.languageFiles.Count == 0) {
+				popupOptions = new string[] { "None" };
+			} else {
+				popupOptions = tu.languageFiles.ToArray ();
+			}
+
+			EditorGUILayout.Space ();
+			languagePopupIndex = EditorGUILayout.Popup (languagePopupIndex, popupOptions);
+		}
+
+	}
+
+	private void NewLanguageDialog() {
 
 	}
 }
