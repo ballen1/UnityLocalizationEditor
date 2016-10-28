@@ -56,4 +56,12 @@ public class TranslationUnit : ScriptableObject {
 		return languages.ToArray ();
 	}
 
+	public LanguageUnit getLanguageUnit(int index) {
+		if (languageFiles.Count > index) {
+			return languageFiles [index];
+		} else {
+			return null;
+		}
+	}
+
 }

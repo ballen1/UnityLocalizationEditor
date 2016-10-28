@@ -30,6 +30,14 @@ public class TranslationUnitEditor : EditorWindow {
 
 		if (tu != null) {
 
+			GUILayout.BeginHorizontal ();
+			GUILayout.Label ("Current Translation Unit:", EditorStyles.boldLabel);
+			GUILayout.Label (AssetDatabase.GetAssetOrScenePath (tu), EditorStyles.largeLabel);
+			GUILayout.EndHorizontal ();
+
+			EditorGUILayout.Space ();
+			EditorGUILayout.Space ();
+
 			tu.updateLanguageFileList ();
 
 			GUILayout.BeginHorizontal ();
@@ -42,6 +50,11 @@ public class TranslationUnitEditor : EditorWindow {
 			}
 
 			GUILayout.EndHorizontal ();
+
+			if (tu.languageFiles.Count != 0) {
+				displayLanguageUnitEditor ();
+		
+			}
 		}
 
 	}
@@ -117,6 +130,35 @@ public class TranslationUnitEditor : EditorWindow {
 			tu.updateLanguageFileList ();
 		}
 
+	}
+
+	private void displayLanguageUnitEditor() {
+
+		LanguageUnit lu = tu.getLanguageUnit (languagePopupIndex);
+
+		if (lu) {
+
+			EditorGUILayout.BeginHorizontal ();
+			lu.language = EditorGUILayout.TextField ("Language", lu.language);
+			EditorGUILayout.EndHorizontal ();
+
+			for (int i = 0; i < lu.keys.Count; i++) {
+				EditorGUILayout.BeginHorizontal ();
+				EditorGUILayout.LabelField ("Key", GUILayout.MaxWidth(30));
+				lu.keys [i] = EditorGUILayout.TextField (lu.keys [i]);
+				EditorGUILayout.LabelField ("String", GUILayout.MaxWidth(50));
+				lu.values [i] = EditorGUILayout.TextField (lu.values [i]);
+				EditorGUILayout.EndHorizontal ();
+			}
+
+			EditorGUILayout.BeginHorizontal ();
+			if (GUILayout.Button ("Add New String")) {
+				lu.keys.Add ("");
+				lu.values.Add ("");
+			}
+			EditorGUILayout.EndHorizontal ();
+		}
+			
 	}
 
 	private string pathRelToAssetsDir(string path) {
