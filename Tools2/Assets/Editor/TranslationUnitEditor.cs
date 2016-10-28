@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEditor;
+using System.Collections;
 using System.Collections.Generic;
 
 public class TranslationUnitEditor : EditorWindow {
@@ -30,6 +30,8 @@ public class TranslationUnitEditor : EditorWindow {
 
 		if (tu != null) {
 
+			tu.updateLanguageFileList ();
+
 			GUILayout.BeginHorizontal ();
 			EditorGUILayout.LabelField ("Current Language", EditorStyles.boldLabel);
 			CreateLanguagePopup ();
@@ -51,13 +53,12 @@ public class TranslationUnitEditor : EditorWindow {
 		if (path.Length > 0) {
 
 			if (path.StartsWith (Application.dataPath)) {
-				path = path.Substring (Application.dataPath.Length - "Assets".Length);
+				path = pathRelToAssetsDir(path);
 				tu = AssetDatabase.LoadAssetAtPath<TranslationUnit> (path);
 
 				if (tu.languageFiles == null) {
-					tu.languageFiles = new List<string> ();
+					tu.languageFiles = new List<LanguageUnit> ();
 				}
-				tu.path = path;
 			}
 
 		}
@@ -70,12 +71,11 @@ public class TranslationUnitEditor : EditorWindow {
 
 		if (path.Length > 0) {
 			tu = ScriptableObject.CreateInstance<TranslationUnit> ();
-			tu.languageFiles = new List<string> ();
+			tu.languageFiles = new List<LanguageUnit> ();
 
 			if (path.StartsWith(Application.dataPath)) {
 
-				path = path.Substring (Application.dataPath.Length - "Assets".Length);
-				tu.path = path;
+				path = pathRelToAssetsDir(path);
 
 				AssetDatabase.CreateAsset (tu, path + System.IO.Path.DirectorySeparatorChar + "Translation.asset");
 				AssetDatabase.SaveAssets ();
@@ -93,7 +93,7 @@ public class TranslationUnitEditor : EditorWindow {
 			if (tu.languageFiles.Count == 0) {
 				popupOptions = new string[] { "None" };
 			} else {
-				popupOptions = tu.languageFiles.ToArray ();
+				popupOptions = tu.getAvailableLanguages();
 			}
 
 			EditorGUILayout.Space ();
@@ -104,5 +104,22 @@ public class TranslationUnitEditor : EditorWindow {
 
 	private void NewLanguageDialog() {
 
+		string path = EditorUtility.SaveFilePanelInProject ("Save new language asset file", "Language", "asset", "");
+
+		if (!string.IsNullOrEmpty (path)) {
+			LanguageUnit lu = ScriptableObject.CreateInstance<LanguageUnit> ();
+			lu.keys = new List<string> ();
+			lu.values = new List<string> ();
+
+			AssetDatabase.CreateAsset (lu, path);
+			AssetDatabase.SaveAssets ();
+
+			tu.updateLanguageFileList ();
+		}
+
+	}
+
+	private string pathRelToAssetsDir(string path) {
+		return path.Substring (Application.dataPath.Length - "Assets".Length);
 	}
 }
