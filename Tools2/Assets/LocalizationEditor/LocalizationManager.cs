@@ -20,8 +20,8 @@ public class LocalizationManager : MonoBehaviour {
 		SelectLanguage ();
 	}
 
-	public void SetLanguageindex (int index) {
-		languageIndex = index;
+	public static void SetLanguageindex (int index) {
+		Instance.languageIndex = index;
 	}
 
 	private void SelectLanguage() {
@@ -34,7 +34,7 @@ public class LocalizationManager : MonoBehaviour {
 		SelectLanguage ();
 	}
 
-	string Get(string key) {
+	public static string Get(string key) {
 		return Instance.selectedLanguageUnit.Get (key);
 	}
 

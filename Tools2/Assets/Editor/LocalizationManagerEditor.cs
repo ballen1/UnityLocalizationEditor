@@ -8,13 +8,10 @@ public class LocalizationManagerEditor : Editor {
 	SerializedProperty translationUnit;
 	SerializedProperty languageUnit;
 
-	LocalizationManager lm;
-
 	private int selectedIndex = 0;
 
 	void OnEnable() {
 		translationUnit = serializedObject.FindProperty ("selectedTranslationUnit");
-		lm = (LocalizationManager)target;
 	}
 
 	public override void OnInspectorGUI() {
@@ -26,7 +23,7 @@ public class LocalizationManagerEditor : Editor {
 		string[] languages = tu.getAvailableLanguages ();
 
 		selectedIndex = EditorGUILayout.Popup (selectedIndex, languages);
-		lm.SetLanguageindex (selectedIndex);
+		LocalizationManager.SetLanguageindex (selectedIndex);
 	}
 
 }
