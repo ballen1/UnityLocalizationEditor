@@ -23,7 +23,7 @@ public class LocalizationManagerEditor : Editor {
 		string[] languages = tu.getAvailableLanguages ();
 
 		selectedIndex = EditorGUILayout.Popup (selectedIndex, languages);
-		LocalizationManager.SetLanguageindex (selectedIndex);
+		LocalizationManager.SetLanguageIndex (selectedIndex);
 	}
 
 }
