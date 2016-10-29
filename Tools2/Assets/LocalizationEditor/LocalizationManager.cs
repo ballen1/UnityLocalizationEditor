@@ -3,13 +3,11 @@ using System.Collections;
 
 public class LocalizationManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	public TranslationUnit selectedTranslationUnit;
+	public LanguageUnit selectedLanguageUnit;
+
+	void Start() {
+
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }
