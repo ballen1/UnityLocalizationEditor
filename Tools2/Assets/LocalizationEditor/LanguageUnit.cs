@@ -8,4 +8,13 @@ public class LanguageUnit : ScriptableObject {
 	public List<string> keys;
 	public List<string> values;
 
+	public string Get(string key) {
+		int index = keys.IndexOf (key);
+
+		if (index == -1) {
+			return null;
+		} else {
+			return values [index];
+		}
+	}
 }
