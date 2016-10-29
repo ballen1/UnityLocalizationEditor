@@ -6,7 +6,7 @@ public class LocalizationManager : MonoBehaviour {
 	public static LocalizationManager Instance;
 	public TranslationUnit selectedTranslationUnit;
 	private LanguageUnit selectedLanguageUnit;
-	private int languageIndex;
+	public static int languageIndex = 0;
 
 	void Awake() {
 		
@@ -21,7 +21,7 @@ public class LocalizationManager : MonoBehaviour {
 	}
 
 	public static void SetLanguageindex (int index) {
-		Instance.languageIndex = index;
+		languageIndex = index;
 	}
 
 	private void SelectLanguage() {

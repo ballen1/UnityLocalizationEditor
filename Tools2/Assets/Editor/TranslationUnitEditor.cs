@@ -10,7 +10,7 @@ public class TranslationUnitEditor : EditorWindow {
 
 	[MenuItem("Localization/Localization Editor")]
 	static void Init() {
-		EditorWindow.GetWindow<TranslationUnitEditor> ();
+		EditorWindow.GetWindow<TranslationUnitEditor> ("Localization");
 	}
 
 	void OnGUI() {
