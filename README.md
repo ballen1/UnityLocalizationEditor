@@ -1,4 +1,4 @@
-# UnityLocalizationEditor
+# Unity Localization Editor
 
 This is a custom language localization editor for Unity. The developer can create a translation unit which can contain as many languages as required. Each language unit allows the developer to define keys for strings and to assign a language-specific string to each key.
 
